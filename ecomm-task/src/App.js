@@ -6,6 +6,7 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import { ThreeCircles, ThreeDots, Grid, Bars, BallTriangle } from "react-loader-spinner"
 
 
 function App() {
@@ -17,7 +18,17 @@ function App() {
       <CardContent>
         <Typography sx={{ fontSize: 150, alignContent: 'center', justifyContent: 'center' }} color="coral" >
         {'wantalot.com'}
-        </Typography>      
+        </Typography>    
+        <Bars
+            //height="80"
+            width="80"
+            color="black"
+            //ariaLabel="tail-spin-loading"
+            radius="1"
+            wrapperStyle={{ alignContent: 'center', justifyContent: 'center'}}
+            wrapperClass=""
+            visible={true}
+        />  
       </CardContent>
       
     </Card>
