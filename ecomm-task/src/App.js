@@ -14,6 +14,10 @@ import Homepage from './Homepage';
 import { useMediaQuery } from 'react-responsive'
 import MediaQuery from 'react-responsive'
 import Grid from '@mui/system/Unstable_Grid';
+import Products from './Products';
+import Wishlist from './Wishlist';
+import Updates from './Updates';
+import Contact from './Contact';
 
 export default function App() {
 
@@ -82,11 +86,11 @@ export default function App() {
       <MiniDrawer/>
       <Routes>
       <Route index element={<Homepage />} />
-      {/* <Route path="/gaming" exact element={<Gaming />} /> 
-      <Route path="/gadgets" exact element={<Gadgets />} /> 
-      <Route path="/tbc" element={<TBC />} /> 
+      <Route path="/products" exact element={<Products />} /> 
+      <Route path="/wishlist" exact element={<Wishlist />} /> 
+      <Route path="/updates" element={<Updates />} /> 
       <Route path="/contact" element={<Contact />} />
-      <Route path="/search" element={<Search />} />
+      {/* <Route path="/search" element={<Search />} />
       <Route path="/success" element={<Success />} />
       <Route path="/login" element={<Login />} />
       <Route path="/sign-up" element={<Signup />} />

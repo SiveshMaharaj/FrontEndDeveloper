@@ -229,20 +229,20 @@ const itemsList = [
     {
       text: <div className="font-link">Products Home</div>,              
       icon: <EmojiEmotionsIcon />,
-      url:'/gaming',
-      onClick: () => navigate('/gaming'),
+      url:'/products',
+      onClick: () => navigate('/products'),
     },
     {
       text: <div className="font-link">My Wishlist</div>,
       icon: <FavoriteOutlinedIcon />,
-      url:'/gadgets',
-      onClick: () => navigate('/gadgets'),
+      url:'/wishlist',
+      onClick: () => navigate('/wishlist'),
     },
     {
         text: <div className="font-link">Coming Soon</div>,
         icon: <StarRateIcon />,
-        url:'/tbc',
-        onClick: () => navigate('/tbc'),
+        url:'/updates',
+        onClick: () => navigate('/updates'),
       },
     {
       text: <div className="font-link">Contact Us</div>,
