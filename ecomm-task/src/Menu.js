@@ -17,7 +17,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import MailIcon from '@mui/icons-material/Mail';
-import './App.css';
+import './AppStyle.css';
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
 import StarRateIcon from '@mui/icons-material/StarRate';
 import ElectricBoltIcon from '@mui/icons-material/ElectricBolt';
@@ -42,6 +42,12 @@ import ListItemButton from '@mui/material/ListItemButton';
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
 import PropTypes from 'prop-types';
+import { useMediaQuery } from 'react-responsive'
+import MediaQuery from 'react-responsive'
+import Grid from '@mui/system/Unstable_Grid';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+
+
 
 //const adminOptions = ['Admin Console Login', 'Contact Admin Tech'];
 
@@ -303,7 +309,7 @@ const itemsList = [
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open} sx= {{backgroundColor: "red", color: "black"}}>
+      <AppBar position="fixed" open={open} sx= {{backgroundColor: "#edfff5", color: "black"}}>
         <Toolbar>
         <Box display='flex' flexGrow={1}>
           <IconButton
@@ -318,23 +324,27 @@ const itemsList = [
           >
             <MenuIcon />
           </IconButton>
-          <Typography style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }} variant="h4" noWrap component="div">
-            <p className="font-head" >GoodStuff Gaming & Gadgets</p>
-          </Typography>
-          <Divider/>          
-          {/* <img src={logo} className="App-logo" alt="logo" style={{height:'60px', width: '60px'}} />            */}
-          </Box>
-             <div/>    
-           <TextField id="outlined-search" type="search" sx={{height:'51px', width: '300px'}} label={<div className="font-link">Search products...</div>} onChange={handleCriteria} value={search} InputLabelProps={{style : {color : 'black'} }}/>          
+          <div/>
+          <div/>    
+           <TextField id="outlined-search" type="search" sx={{height:'50px', width: '200px', marginLeft: '2%'}} label={<div className="font-link">Search products...</div>} onChange={handleCriteria} value={search} InputLabelProps={{style : {color : 'black'} }}/>          
           &nbsp;&nbsp;
           <Tooltip title="Search">
           <Fab onClick={handleSearch} aria-label="search" sx= {{backgroundColor: "black", color: "red", height:'55px', width:'55px'}}>
             <SearchIcon />
           </Fab>
-          </Tooltip>                   
+          </Tooltip> 
+          <Typography style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }} variant="h4" noWrap component="div">
+            <p className="font-head" >{'wantalot.com'}</p>
+          </Typography>
+          <Divider/>          
+          {/* <img src={logo} className="App-logo" alt="logo" style={{height:'60px', width: '60px'}} />            */}
+          </Box>  
+          <Fab onClick={'handleCart'} aria-label="search" sx= {{backgroundColor: "black", color: "red", height:'55px', width:'55px'}}>
+            <ShoppingCartOutlinedIcon />
+          </Fab>                             
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" open={open} PaperProps={{ sx: { backgroundColor: "blanchedalmond", color: "black" } }}>
+      <Drawer variant="permanent" open={open} PaperProps={{ sx: { backgroundColor: "#fab9c5", color: "black" } }}>
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
@@ -417,35 +427,12 @@ const itemsList = [
   >
     <ContactSupportIcon fontSize='large' />
   </Fab>   
-  </Tooltip>
-
-  <Tooltip title="Admin Console Login">
-    <Fab disabled={UserRole !== 'Admin' } onClick={handleOpenAdmin}
-    sx={{
-      position: "fixed",
-      bottom: (theme) => theme.spacing(12),
-      right: (theme) => theme.spacing(2)
-    }}
-    color="warning"
-  >
-    <AdminPanelSettingsIcon fontSize='large' />
-  </Fab>   
-  </Tooltip>
-
-  <Tooltip title="User status"> 
-  <Chip variant="outlined" label={<div className="font-link">{'Hello User'}</div>} color="success"
-   sx={{
-    position: "fixed",
-    top: (theme) => theme.spacing(10),
-    right: (theme) => theme.spacing(2)
-    }}
-  />  
-  </Tooltip>
+  </Tooltip>   
 
 
-  <Typography variant="subtitle1" component="div">
+  {/* <Typography variant="subtitle1" component="div">
         Selected: {selectedValue}
-      </Typography>
+      </Typography> */}
       <br />
       {/* <SimpleDialog
         selectedValue={selectedValue}

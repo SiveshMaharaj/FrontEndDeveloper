@@ -6,23 +6,23 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { ThreeCircles, ThreeDots, Grid, Bars, BallTriangle } from "react-loader-spinner"
+import { ThreeCircles, ThreeDots, Bars, BallTriangle } from "react-loader-spinner"
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 import MiniDrawer from './Menu';
 import Homepage from './Homepage';
-
+import { useMediaQuery } from 'react-responsive'
+import MediaQuery from 'react-responsive'
+import Grid from '@mui/system/Unstable_Grid';
 
 export default function App() {
 
   const [loading, setLoading] = useState(true);
     
     useEffect(() => {
-
       setTimeout(() => {
          setLoading(false)
       }, 5000)
-
     }, []);
 
 
@@ -30,7 +30,6 @@ export default function App() {
       return(
   //return(
     <div className='App-welcome'>
-
   <div className="font-head">    
     <Card sx={{ width: '100%', borderRadius: 10, borderColor: 'coral', borderWidth: 10, borderStyle:'solid' }}>
       <CardContent>
@@ -74,7 +73,10 @@ export default function App() {
   }
 
   if(!loading){
-    return <div className="App">
+    return (
+    <Box sx={{ flexGrow: 1 }}>
+         
+    <div className="App-header">
     <Router>
     {/* <Transitions> */}
       <MiniDrawer/>
@@ -92,11 +94,11 @@ export default function App() {
       <Route path="/adminTech" element={<AdminTech />} /> */}
       </Routes>
       {/* </Transitions> */}
-    </Router>      
-    <p></p>
-    <header className="App-header">          
-    </header>
+    </Router>         
   </div>
+ 
+    </Box>
+    )
  }
 }
 
