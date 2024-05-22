@@ -46,6 +46,7 @@ import { useMediaQuery } from 'react-responsive'
 import MediaQuery from 'react-responsive'
 import Grid from '@mui/system/Unstable_Grid';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
 
 
 
@@ -226,14 +227,14 @@ export default function MiniDrawer() {
 let navigate = useNavigate();        
 const itemsList = [
     {
-      text: <div className="font-link">Current Games</div>,              
+      text: <div className="font-link">Products Home</div>,              
       icon: <EmojiEmotionsIcon />,
       url:'/gaming',
       onClick: () => navigate('/gaming'),
     },
     {
-      text: <div className="font-link">Current Gadgets</div>,
-      icon: <ElectricBoltIcon />,
+      text: <div className="font-link">My Wishlist</div>,
+      icon: <FavoriteOutlinedIcon />,
       url:'/gadgets',
       onClick: () => navigate('/gadgets'),
     },
@@ -249,12 +250,12 @@ const itemsList = [
       url:'/contact',
       onClick: () => navigate('/contact'), 
     },
-    {
-      text: <div className="font-link">Login/Sign-up</div>,
-      icon: <LoginIcon />,
-      url:'/login',
-      onClick: () => navigate('/login'), 
-    },
+    // {
+    //   text: <div className="font-link">Login/Sign-up</div>,
+    //   icon: <LoginIcon />,
+    //   url:'/login',
+    //   onClick: () => navigate('/login'), 
+    // },
     ];
         
 
@@ -339,9 +340,11 @@ const itemsList = [
           <Divider/>          
           {/* <img src={logo} className="App-logo" alt="logo" style={{height:'60px', width: '60px'}} />            */}
           </Box>  
+          <Tooltip title="View cart">
           <Fab onClick={'handleCart'} aria-label="search" sx= {{backgroundColor: "black", color: "red", height:'55px', width:'55px'}}>
             <ShoppingCartOutlinedIcon />
-          </Fab>                             
+          </Fab>  
+          </Tooltip>                           
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open} PaperProps={{ sx: { backgroundColor: "#fab9c5", color: "black" } }}>
