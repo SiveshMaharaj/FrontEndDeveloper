@@ -47,6 +47,10 @@ import MediaQuery from 'react-responsive'
 import Grid from '@mui/system/Unstable_Grid';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+
 
 
 
@@ -188,6 +192,16 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 
 export default function MiniDrawer() {  
+
+    const [openCart, setOpenCart] = React.useState(false);
+
+    const handleCartOpen = () => {
+        setOpenCart(true);
+    };
+  
+    const handleCartClose = () => {
+        setOpenCart(false);
+    };
 
   const UserRole = localStorage.getItem("role")
   console.log('UserRole', UserRole)
@@ -341,7 +355,7 @@ const itemsList = [
           {/* <img src={logo} className="App-logo" alt="logo" style={{height:'60px', width: '60px'}} />            */}
           </Box>  
           <Tooltip title="View cart">
-          <Fab onClick={'handleCart'} aria-label="search" sx= {{backgroundColor: "black", color: "red", height:'55px', width:'55px'}}>
+          <Fab onClick={handleCartOpen} aria-label="search" sx= {{backgroundColor: "black", color: "red", height:'55px', width:'55px'}}>
             <ShoppingCartOutlinedIcon />
           </Fab>  
           </Tooltip>                           
@@ -431,17 +445,27 @@ const itemsList = [
     <ContactSupportIcon fontSize='large' />
   </Fab>   
   </Tooltip>   
-
-
-  {/* <Typography variant="subtitle1" component="div">
-        Selected: {selectedValue}
-      </Typography> */}
-      <br />
-      {/* <SimpleDialog
-        selectedValue={selectedValue}
-        open={openAdmin}
-        onClose={handleClose}
-      /> */}
+ 
+      <React.Fragment>      
+      <Dialog
+        open={openCart}
+        onClose={handleCartClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Your cart is empty"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Continue shopping to add items to your cart.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCartClose}>Ok</Button>          
+        </DialogActions>
+      </Dialog>
+    </React.Fragment>
 
 
   </Box>
