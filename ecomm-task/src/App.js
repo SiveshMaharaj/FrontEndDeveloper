@@ -7,10 +7,28 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { ThreeCircles, ThreeDots, Grid, Bars, BallTriangle } from "react-loader-spinner"
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { useEffect, useState, useRef } from 'react';
+import MiniDrawer from './Menu';
+import Homepage from './Homepage';
 
 
-function App() {
-  return(
+export default function App() {
+
+  const [loading, setLoading] = useState(true);
+    
+    useEffect(() => {
+
+      setTimeout(() => {
+         setLoading(false)
+      }, 5000)
+
+    }, []);
+
+
+    if (loading) {
+      return(
+  //return(
     <div className='App-welcome'>
 
   <div className="font-head">    
@@ -53,6 +71,33 @@ function App() {
       </MovingText>   */}   
     
     </div>)
+  }
+
+  if(!loading){
+    return <div className="App">
+    <Router>
+    {/* <Transitions> */}
+      <MiniDrawer/>
+      <Routes>
+      <Route index element={<Homepage />} />
+      {/* <Route path="/gaming" exact element={<Gaming />} /> 
+      <Route path="/gadgets" exact element={<Gadgets />} /> 
+      <Route path="/tbc" element={<TBC />} /> 
+      <Route path="/contact" element={<Contact />} />
+      <Route path="/search" element={<Search />} />
+      <Route path="/success" element={<Success />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/sign-up" element={<Signup />} />
+      <Route path="/admin" element={<Admin />} />
+      <Route path="/adminTech" element={<AdminTech />} /> */}
+      </Routes>
+      {/* </Transitions> */}
+    </Router>      
+    <p></p>
+    <header className="App-header">          
+    </header>
+  </div>
+ }
 }
 
-export default App;
+//export default App;
