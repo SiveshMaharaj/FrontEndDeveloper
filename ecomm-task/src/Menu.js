@@ -203,8 +203,8 @@ export default function MiniDrawer() {
         setOpenCart(false);
     };
 
-  const UserRole = localStorage.getItem("role")
-  console.log('UserRole', UserRole)
+  //const UserRole = localStorage.getItem("role")
+  //console.log('UserRole', UserRole)
 
   const [openAdmin, setOpenAdmin] = React.useState(false);
   const [selectedValue, setSelectedValue] = React.useState([]);

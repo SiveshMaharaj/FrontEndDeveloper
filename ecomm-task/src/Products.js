@@ -43,8 +43,9 @@ export default function Products() {
     const [categories, setCategories] = useState([])
     const [chosen, setChosen] = useState([]);
     const [openSnack, setOpenSnack] = React.useState(false);  
-
     const [openInfo, setOpenInfo] = React.useState(false);
+    let wishlist = [];
+    
 
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -53,8 +54,20 @@ export default function Products() {
         setOpenSnack(false);
       };  
 
-    const handleWishlist = (key) => {
+    const handleWishlist = (product) => {
+        var existingEntries = JSON.parse(localStorage.getItem("wishlist"));
+        if(existingEntries == null) existingEntries = [];
+        var entry = {
+            "id": product.id,
+            "title": product.title,
+            "price": product.price
+        };
+        localStorage.setItem("entry", JSON.stringify(entry)); 
+        existingEntries.push(entry);
+        localStorage.setItem("wishlist", JSON.stringify(existingEntries));
         setOpenSnack(true);  
+        let ls = JSON.parse(localStorage.getItem("wishlist")) 
+        console.log(ls)
     };   
     
 
@@ -134,7 +147,7 @@ return (
     variant="filled"
     sx={{ width: '100%' }}
   >
-    Product added to your wishlist !
+    {'Product added to your wishlist !'}
   </Alert>
 </Snackbar>   
   {/* <Card sx={{ width: '100', borderRadius: 10, alignContent: 'center', justifyContent: 'center', textAlign:'center'}}>
@@ -200,7 +213,7 @@ return (
                 <Tooltip title="Add to wishlist">
                 <IconButton  
                     key={product.id}               
-                    onClick={() => handleWishlist(product.id)} // set product key to process at payment 
+                    onClick={() => handleWishlist(product)} // set product key to process at payment 
                     color="error"
                     aria-label={`info about ${product.title}`}
                     size="large"
