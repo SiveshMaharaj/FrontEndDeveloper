@@ -212,14 +212,14 @@ return (
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
            {chosen.title}
-           <br/>
-           <br/>
+            <br/>
+            <br/>
            {chosen.description}
-           <br/>
-           <br/>
+            <br/>
+            <br/>
            {`R ${chosen.price}`}
-           <br/>
-           <br/>
+            <br/>
+            <br/>
            <img
             src={chosen.image}
             srcSet=''

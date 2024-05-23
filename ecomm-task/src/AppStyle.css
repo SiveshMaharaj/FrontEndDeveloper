@@ -48,6 +48,12 @@
     color: #edfff5;
     text-shadow: 0 0 5px #000000, 0 0 5px;
   }
+
+  .font-contact {
+    font-family: 'Dosis', sans-serif;
+    font-size: 40px;
+    color: #edfff5;    
+  }
   
   .font-link {
     font-family: 'Dosis', sans-serif;
