@@ -57,11 +57,11 @@ return (
    wishlist != null && wishlist.length > 0?
 <div className="App-header">    
 <Snackbar
-          onClose={handleClose}
-          open={openSnack}
-          autoHideDuration={4000}
-          //message="Product added to your wishlist"
-          >
+        onClose={handleClose}
+        open={openSnack}
+        autoHideDuration={4000}
+        //message="Product added to your wishlist"
+        >
     <Alert
     //onClose={handleClose}
     severity="success"

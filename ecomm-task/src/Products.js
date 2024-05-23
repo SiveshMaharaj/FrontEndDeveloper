@@ -36,6 +36,7 @@ import Dialog from '@mui/material/Dialog';
 import Button from '@mui/material/Button';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
 
 export default function Products() { 
     const [category, setCategory] = React.useState('');
@@ -44,6 +45,8 @@ export default function Products() {
     const [chosen, setChosen] = useState([]);
     const [openSnack, setOpenSnack] = React.useState(false);  
     const [openInfo, setOpenInfo] = React.useState(false);
+    const [alert, setAlert] = React.useState(true);
+
     let wishlist = [];
     
 
@@ -54,20 +57,36 @@ export default function Products() {
         setOpenSnack(false);
       };  
 
+      const handleAlertClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+        setAlert(false);
+      };  
+
     const handleWishlist = (product) => {
         var existingEntries = JSON.parse(localStorage.getItem("wishlist"));
-        if(existingEntries == null) existingEntries = [];
-        var entry = {
-            "id": product.id,
-            "title": product.title,
-            "price": product.price
-        };
-        localStorage.setItem("entry", JSON.stringify(entry)); 
-        existingEntries.push(entry);
-        localStorage.setItem("wishlist", JSON.stringify(existingEntries));
-        setOpenSnack(true);  
-        let ls = JSON.parse(localStorage.getItem("wishlist")) 
-        console.log(ls)
+
+        var id = existingEntries.length + 1;        
+            if (existingEntries.filter(item => item.id == product.id).length == 0){
+                if(existingEntries == null) existingEntries = [];
+                var entry = {
+                    "id": product.id,
+                    "title": product.title,
+                    "price": product.price
+                };
+                localStorage.setItem("entry", JSON.stringify(entry)); 
+                existingEntries.push(entry);
+                localStorage.setItem("wishlist", JSON.stringify(existingEntries));
+                setOpenSnack(true);  
+                let ls = JSON.parse(localStorage.getItem("wishlist")) 
+                console.log(ls)
+            } else {
+            setAlert(true);
+            console.log('item already exists')
+            }        
+
+        
     };   
     
 
@@ -136,6 +155,21 @@ export default function Products() {
 return (   
 <div className="App-header"> 
 <Snackbar
+          onClose={handleAlertClose}
+          open={alert}
+          autoHideDuration={4000}
+          //message="Product added to your wishlist"
+          >
+    <Alert
+    //onClose={handleClose}
+    severity="info"
+    variant="filled"
+    sx={{ width: '100%' }}
+  >
+    {'Product already added to your wishlist !'}
+  </Alert>
+</Snackbar>  
+    <Snackbar
           onClose={handleClose}
           open={openSnack}
           autoHideDuration={4000}
