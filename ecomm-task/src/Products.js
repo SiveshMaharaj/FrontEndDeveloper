@@ -28,11 +28,28 @@ import Tooltip from '@mui/material/Tooltip';
 import InfoIcon from '@mui/icons-material/Info';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Dialog from '@mui/material/Dialog';
+import Button from '@mui/material/Button';
 
 export default function Products() { 
     const [category, setCategory] = React.useState('');
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([])
+    const [chosen, setChosen] = useState([]);
+
+    const [openInfo, setOpenInfo] = React.useState(false);
+
+    const handleInfoOpen = () => {
+        setOpenInfo(true);
+    };
+  
+    const handleInfoClose = () => {
+        setOpenInfo(false);
+    };
 
     const handleCategory = (event) => {
         setCategory(event.target.value);
@@ -69,6 +86,17 @@ export default function Products() {
 
     // Avoid duplicate function calls with useMemo
     var filteredList = useMemo(getFilteredList, [category, products]);
+
+    // Function to fetch product data using Axios
+    const fetchSingleProduct = async (key) => {
+        try {
+        const response = await axios.get("https://fakestoreapi.com/products/" + key);
+        setChosen(response.data);
+        handleInfoOpen();
+        } catch (error) {
+        console.error("Error fetching data:", error);
+        }
+    };
 
     // Call fetchData on component mount
     useEffect(() => {
@@ -121,14 +149,15 @@ return (
             height={200}
           />
           <ImageListItemBar
+            key={product.id}
             title={product.title}
             subtitle={product.description}
             style={{backgroundColor:'black', height: 150}}
             actionIcon={
             <>
                 <Tooltip title="Add to cart">
-                <IconButton        
-                    key={product.id}         
+                <IconButton    
+                    key={product.id}             
                     //onClick={() => handleCheckout(item.key)} // set product key to process at payment 
                     color="warning"
                     aria-label={`info about ${product.title}`}
@@ -139,7 +168,8 @@ return (
                 </Tooltip>
 
                 <Tooltip title="Add to wishlist">
-                <IconButton                 
+                <IconButton  
+                    key={product.id}               
                     //onClick={() => handleCheckout(item.key)} // set product key to process at payment 
                     color="error"
                     aria-label={`info about ${product.title}`}
@@ -150,8 +180,9 @@ return (
                 </Tooltip>
 
                 <Tooltip title="View product details">
-                <IconButton                 
-                    //onClick={() => handleCheckout(item.key)} // set product key to process at payment 
+                <IconButton          
+                    key={product.id}       
+                    onClick={() => fetchSingleProduct(product.id)} // set product key to process at payment 
                     color="info"
                     aria-label={`info about ${product.title}`}
                     size="large"
@@ -165,6 +196,47 @@ return (
         </ImageListItem>
       ))}
     </ImageList>
+
+    
+    <React.Fragment>      
+    
+      <Dialog
+        open={openInfo}
+        onClose={handleInfoClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Product details"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+           {chosen.title}
+           <br/>
+           <br/>
+           {chosen.description}
+           <br/>
+           <br/>
+           {`R ${chosen.price}`}
+           <br/>
+           <br/>
+           <img
+            src={chosen.image}
+            srcSet=''
+            alt={chosen.id}
+            loading="lazy"
+            width={200}
+            height={200}
+          />
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleInfoClose}>Cool!</Button>          
+        </DialogActions>
+      </Dialog>
+      
+    </React.Fragment>
+    
 </div>   
 )
 }
