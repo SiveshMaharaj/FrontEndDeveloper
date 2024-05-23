@@ -15,40 +15,156 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import { Divider } from '@mui/material';
+import { useEffect, useState, useMemo } from 'react'
+import axios from 'axios';
+import ImageList from '@mui/material/ImageList';
+import ImageListItem from '@mui/material/ImageListItem';
+import ImageListItemBar from '@mui/material/ImageListItemBar';
+import IconButton from '@mui/material/IconButton';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import Tooltip from '@mui/material/Tooltip';
+import InfoIcon from '@mui/icons-material/Info';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 export default function Products() { 
     const [category, setCategory] = React.useState('');
+    const [products, setProducts] = useState([]);
+    const [categories, setCategories] = useState([])
 
     const handleCategory = (event) => {
         setCategory(event.target.value);
     };
+
+    // Function to fetch product data using Axios
+    const fetchAllProducts = async () => {
+        try {
+        const response = await axios.get("https://fakestoreapi.com/products");
+        setProducts(response.data);
+        } catch (error) {
+        console.error("Error fetching data:", error);
+        }
+    };
+
+    // Function to fetch category data using Axios
+    const fetchAllCategories = async () => {
+        try {
+        const response = await axios.get("https://fakestoreapi.com/products/categories");
+        setCategories(response.data);
+        } catch (error) {
+        console.error("Error fetching data:", error);
+        }
+    };
+
+    // Function to get filtered list
+    function getFilteredList() {
+        // Avoid filter when selectedCategory is null
+        if (!category) {
+          return products;
+        }
+        return products.filter((item) => item.category === category);
+    }
+
+    // Avoid duplicate function calls with useMemo
+    var filteredList = useMemo(getFilteredList, [category, products]);
+
+    // Call fetchData on component mount
+    useEffect(() => {
+        fetchAllProducts();
+        fetchAllCategories();
+    }, []);
   
  
 return (   
 <div className="App-header">    
-  <Card sx={{ width: '100', borderRadius: 10, alignContent: 'center', justifyContent: 'center', textAlign:'center'}}>
+  {/* <Card sx={{ width: '100', borderRadius: 10, alignContent: 'center', justifyContent: 'center', textAlign:'center'}}>
     <CardContent>
       <Typography sx={{ fontSize: 30, alignContent: 'center', justifyContent: 'center' }} color="coral">
         Products page                
       </Typography>         
     </CardContent>    
-  </Card>
+  </Card> */}
+  <br/>
   <br/>
   <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Filter by category</InputLabel>
+        <InputLabel id="demo-simple-select-label">Filter products by category</InputLabel>             
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           value={category}
-          label="Filter by category"
+          label="Filter products by category"
           onChange={handleCategory}
         >
-          <MenuItem value={1}>All</MenuItem>
-          <MenuItem value={2}>Tech</MenuItem>
-          <MenuItem value={3}>Accessories</MenuItem>
-          <MenuItem value={4}>Clothes</MenuItem>
-        </Select>
-      </FormControl>
+        {categories.map((cat) => (
+          <MenuItem key={cat} value={cat}>{cat}</MenuItem>         
+        ))}
+        </Select>        
+    </FormControl>
+
+      {/* {products.map((product) => (
+      <img key={product.id} src={product.image} alt={product.title} width={200}/>
+      ))} */}
+
+    <ImageList sx={{ width: 1000, height: 800, borderRadius: 5, scrollbarWidth: 'none' }}>
+      <ImageListItem key="Subheader" cols={2}>        
+      </ImageListItem>
+      {filteredList.map((product, index) => (
+        <ImageListItem key={index}>
+          <img
+            src={product.image}
+            srcSet=''
+            alt={product.id}
+            loading="lazy"
+            width={200}
+            height={200}
+          />
+          <ImageListItemBar
+            title={product.title}
+            subtitle={product.description}
+            style={{backgroundColor:'black', height: 150}}
+            actionIcon={
+            <>
+                <Tooltip title="Add to cart">
+                <IconButton        
+                    key={product.id}         
+                    //onClick={() => handleCheckout(item.key)} // set product key to process at payment 
+                    color="warning"
+                    aria-label={`info about ${product.title}`}
+                    size="large"
+                    >
+                    <ShoppingCartIcon size="large"/>
+                </IconButton>
+                </Tooltip>
+
+                <Tooltip title="Add to wishlist">
+                <IconButton                 
+                    //onClick={() => handleCheckout(item.key)} // set product key to process at payment 
+                    color="error"
+                    aria-label={`info about ${product.title}`}
+                    size="large"
+                    >
+                    <FavoriteIcon size="large"/>
+                </IconButton>
+                </Tooltip>
+
+                <Tooltip title="View product details">
+                <IconButton                 
+                    //onClick={() => handleCheckout(item.key)} // set product key to process at payment 
+                    color="info"
+                    aria-label={`info about ${product.title}`}
+                    size="large"
+                    >
+                    <InfoIcon size="large"/>
+                </IconButton>
+                </Tooltip>
+            </>
+            }
+          />
+        </ImageListItem>
+      ))}
+    </ImageList>
 </div>   
 )
 }
