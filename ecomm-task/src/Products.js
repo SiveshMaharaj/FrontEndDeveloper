@@ -34,14 +34,29 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
 import Button from '@mui/material/Button';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 export default function Products() { 
     const [category, setCategory] = React.useState('');
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([])
     const [chosen, setChosen] = useState([]);
+    const [openSnack, setOpenSnack] = React.useState(false);  
 
     const [openInfo, setOpenInfo] = React.useState(false);
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+        setOpenSnack(false);
+      };  
+
+    const handleWishlist = (key) => {
+        setOpenSnack(true);  
+    };   
+    
 
     const handleInfoOpen = () => {
         setOpenInfo(true);
@@ -106,7 +121,22 @@ export default function Products() {
   
  
 return (   
-<div className="App-header">    
+<div className="App-header"> 
+<Snackbar
+          onClose={handleClose}
+          open={openSnack}
+          autoHideDuration={4000}
+          //message="Product added to your wishlist"
+          >
+    <Alert
+    //onClose={handleClose}
+    severity="success"
+    variant="filled"
+    sx={{ width: '100%' }}
+  >
+    Product added to your wishlist !
+  </Alert>
+</Snackbar>   
   {/* <Card sx={{ width: '100', borderRadius: 10, alignContent: 'center', justifyContent: 'center', textAlign:'center'}}>
     <CardContent>
       <Typography sx={{ fontSize: 30, alignContent: 'center', justifyContent: 'center' }} color="coral">
@@ -170,7 +200,7 @@ return (
                 <Tooltip title="Add to wishlist">
                 <IconButton  
                     key={product.id}               
-                    //onClick={() => handleCheckout(item.key)} // set product key to process at payment 
+                    onClick={() => handleWishlist(product.id)} // set product key to process at payment 
                     color="error"
                     aria-label={`info about ${product.title}`}
                     size="large"
