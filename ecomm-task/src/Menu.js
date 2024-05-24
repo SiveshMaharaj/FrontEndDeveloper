@@ -139,25 +139,37 @@ export default function MiniDrawer() {
 
     
 
-    
-    let wishlist = JSON.parse(localStorage.getItem("wishlist"));
-
-    let cart = JSON.parse(localStorage.getItem("cart"));
-
-    const handleRemove = (row) => {
-        /* let fw = JSON.parse(localStorage.getItem("wishlist"));
-        const filtered = fw.filter(item => item.id !== row.id);
-        localStorage.setItem("wishlist", JSON.stringify(filtered));
-        console.log(row.id + ' removed');
-        setOpenSnack(true); 
-        let ls = JSON.parse(localStorage.getItem("wishlist")) 
-        console.log(ls) */
-    };
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+        return;
+        }
+        setOpenSnack(false);
+    };  
 
     const [openCart, setOpenCart] = React.useState(false);
     const [alert, setAlert] = React.useState(false);
     const [qty, setQty] = React.useState(0);
     const [total, setTotal] = React.useState(0);
+    const [openSnack, setOpenSnack] = React.useState(false);
+
+    let wishlist = JSON.parse(localStorage.getItem("wishlist"));
+
+    let cart = JSON.parse(localStorage.getItem("cart"));
+
+    const handleRemove = (row) => {
+        let fw = JSON.parse(localStorage.getItem("cart"));
+        const filtered = fw.filter(item => item.id !== row.id);
+        localStorage.setItem("cart", JSON.stringify(filtered));
+        console.log(row.id + ' removed');
+        setOpenSnack(true); 
+        let ls = JSON.parse(localStorage.getItem("cart"));
+        console.log(ls);
+        handleCartOpen(qty, total);
+        if(ls.length < 1){
+            setOpenCart(false);
+            setAlert(true);
+        }
+    };
     //let qty = 0;
 
     const handleAlertClose = (event, reason) => {
@@ -198,10 +210,10 @@ export default function MiniDrawer() {
     setOpenAdmin(true);
   };
 
-  const handleClose = (value) => {
+  /* const handleClose = (value) => {
     setOpenAdmin(false);
     setSelectedValue(value);
-  };
+  }; */
   
          
 let navigate = useNavigate();        
@@ -401,6 +413,21 @@ const itemsList = [
   </Fab>   
   </Tooltip>   
   <Snackbar
+        onClose={handleClose}
+        open={openSnack}
+        autoHideDuration={4000}
+        //message="Product added to your wishlist"
+        >
+    <Alert
+    //onClose={handleClose}
+    severity="success"
+    variant="filled"
+    sx={{ width: '100%' }}
+  >
+    {'Product removed from your cart !'}
+  </Alert>
+</Snackbar> 
+  <Snackbar
           onClose={handleAlertClose}
           open={alert}
           autoHideDuration={4000}
@@ -483,7 +510,9 @@ const itemsList = [
     </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCartClose}>Ok</Button>          
+          <Button onClick={handleCartClose}>Ok</Button> 
+          <Button //onClick={handleCartClose}
+          >Proceed to checkout</Button>         
         </DialogActions>
       </Dialog>
     </React.Fragment>
