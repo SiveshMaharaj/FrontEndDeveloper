@@ -27,6 +27,7 @@ import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import Chip from '@mui/material/Chip';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import TablePagination from "@mui/material/TablePagination"; 
 
 export default function Wishlist() { 
     const [openSnack, setOpenSnack] = React.useState(false);  
@@ -54,6 +55,19 @@ export default function Wishlist() {
         
     const wishlistCount = (Number(wishlist.length)) 
     const chipText = "Items in your wishlist :  " + wishlistCount;
+
+    // Table pagination logic
+    const [pg, setpg] = React.useState(0); 
+    const [rpg, setrpg] = React.useState(5); 
+  
+    function handleChangePage(event, newpage) { 
+        setpg(newpage); 
+    } 
+  
+    function handleChangeRowsPerPage(event) { 
+        setrpg(parseInt(event.target.value, 10)); 
+        setpg(0); 
+    } 
   
  
 return (   
@@ -97,7 +111,7 @@ return (
           </TableRow>
         </TableHead>
         <TableBody>
-          {wishlist.map((row) => (
+          {wishlist.slice(pg * rpg, pg * rpg + rpg).map((row) => (
             <TableRow
               key={row.id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -121,9 +135,19 @@ return (
             </TableRow>
           ))}
         </TableBody>
-      </Table>
-      
+      </Table>      
     </TableContainer>
+    <TablePagination 
+        rowsPerPageOptions={[5, 10, 25]} 
+        component="div"
+        count={wishlist.length} 
+        rowsPerPage={rpg} 
+        page={pg} 
+        onPageChange={handleChangePage} 
+        onRowsPerPageChange={handleChangeRowsPerPage} 
+        variant="outlined"
+        style={{width: '100%', color: 'black', backgroundColor: 'lightgray'}}
+    /> 
 </div>   
 :<Card sx={{ width: '100', borderRadius: 10, alignContent: 'center', justifyContent: 'center', textAlign:'center' }}>
 <CardContent>

@@ -43,12 +43,20 @@ export default function Products() {
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([])
     const [chosen, setChosen] = useState([]);
+    const [openCartSnack, setCartSnack] = React.useState(false); 
     const [openSnack, setOpenSnack] = React.useState(false);  
     const [openInfo, setOpenInfo] = React.useState(false);
     const [alert, setAlert] = React.useState(false);
+    const [warning, setWarning] = React.useState(false);
 
-    let wishlist = [];
+    //let wishlist = [];
     
+    const handleCartClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+        setCartSnack(false);
+      };  
 
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -62,7 +70,38 @@ export default function Products() {
           return;
         }
         setAlert(false);
+      }; 
+      
+      const handleWarning = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+        setWarning(false);
       };  
+
+      const handleCart = (product) => {
+            var existingEntries = JSON.parse(localStorage.getItem("cart"));
+
+            var id = existingEntries.length + 1;        
+                if (existingEntries.filter(item => item.id === product.id).length === 0){
+                    if(existingEntries == null) existingEntries = [];
+                    var entry = {
+                        "id": product.id,
+                        "title": product.title,
+                        "price": product.price,
+                        "qty": 1
+                    };
+                    localStorage.setItem("cartentry", JSON.stringify(entry)); 
+                    existingEntries.push(entry);
+                    localStorage.setItem("cart", JSON.stringify(existingEntries));
+                    setCartSnack(true);  
+                    let ls = JSON.parse(localStorage.getItem("cart")) 
+                    console.log(ls)
+                } else {
+            setWarning(true);
+            console.log('item already exists in cart')
+            }       
+        }; 
 
     const handleWishlist = (product) => {
         var existingEntries = JSON.parse(localStorage.getItem("wishlist"));
@@ -84,9 +123,7 @@ export default function Products() {
             } else {
             setAlert(true);
             console.log('item already exists')
-            }        
-
-        
+            }       
     };   
     
 
@@ -154,6 +191,38 @@ export default function Products() {
  
 return (   
 <div className="App-header"> 
+<Snackbar
+          onClose={handleCartClose}
+          open={openCartSnack}
+          autoHideDuration={4000}
+          //message="Product added to your wishlist"
+          >
+    <Alert
+    //onClose={handleClose}
+    severity="success"
+    variant="filled"
+    sx={{ width: '100%' }}
+  >
+    {'Product added to your cart !'}
+  </Alert>
+</Snackbar>  
+
+<Snackbar
+          onClose={handleWarning}
+          open={warning}
+          autoHideDuration={4000}
+          //message="Product added to your wishlist"
+          >
+    <Alert
+    //onClose={handleClose}
+    severity="info"
+    variant="filled"
+    sx={{ width: '100%' }}
+  >
+    {'Product already added to your cart !'}
+  </Alert>
+</Snackbar> 
+
 <Snackbar
           onClose={handleAlertClose}
           open={alert}
@@ -235,7 +304,7 @@ return (
                 <Tooltip title="Add to cart">
                 <IconButton    
                     key={product.id}             
-                    //onClick={() => handleCheckout(item.key)} // set product key to process at payment 
+                    onClick={() => handleCart(product)} 
                     color="warning"
                     aria-label={`info about ${product.title}`}
                     size="large"
@@ -247,7 +316,7 @@ return (
                 <Tooltip title="Add to wishlist">
                 <IconButton  
                     key={product.id}               
-                    onClick={() => handleWishlist(product)} // set product key to process at payment 
+                    onClick={() => handleWishlist(product)}
                     color="error"
                     aria-label={`info about ${product.title}`}
                     size="large"
@@ -259,7 +328,7 @@ return (
                 <Tooltip title="View product details">
                 <IconButton          
                     key={product.id}       
-                    onClick={() => fetchSingleProduct(product.id)} // set product key to process at payment 
+                    onClick={() => fetchSingleProduct(product.id)}
                     color="info"
                     aria-label={`info about ${product.title}`}
                     size="large"
@@ -275,8 +344,7 @@ return (
     </ImageList>
 
     
-    <React.Fragment>      
-    
+    <React.Fragment>     
       <Dialog
         open={openInfo}
         onClose={handleInfoClose}

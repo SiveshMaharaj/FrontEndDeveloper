@@ -27,6 +27,11 @@ export default function App() {
       setTimeout(() => {
          setLoading(false)
       }, 5000)
+      let wishlist = [];
+      let cart = [];
+
+      localStorage.setItem("cart", JSON.stringify(cart));
+      localStorage.setItem("wishlist", JSON.stringify(wishlist));
     }, []);
 
 

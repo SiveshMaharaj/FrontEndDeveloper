@@ -50,77 +50,9 @@ import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
-
-
-
-
-//const adminOptions = ['Admin Console Login', 'Contact Admin Tech'];
-
-/* function SimpleDialog(props) {
-  const { onClose, selectedValue, open } = props;
-  
-  let navigate = useNavigate();
-  const { pathname } = useLocation(); */
-  /* const handleClose = () => {
-    onClose(selectedValue);
-  };
- */
-  /* const handleListItemClick = (value) => {
-    onClose(value);
-  }; */
-
-
-  /* const handleAdminClick = (value) => {    
-    console.log(value)
-    if (value === 'Admin Console Login') {
-    navigate
-      ({
-        pathname: '/admin'
-      });
-      onClose(value);
-    } else {
-      navigate
-      ({
-        pathname: '/adminTech'
-      });
-      onClose(value);
-    }
-  };
-
-  const handleClickaway = () => {
-    onClose(selectedValue);    
-  };
-
-  return (
-    <Dialog onClose={handleClickaway} open={open}>
-      <DialogTitle>Admin Console</DialogTitle>
-      <List sx={{ pt: 0 }}>
-        {adminOptions.map((admin) => (
-          <ListItem key={admin} disableGutters>
-            <ListItemButton onClick={() => handleAdminClick(admin)} key={admin}>
-              <ListItemAvatar>
-                <Avatar>
-                  <AdminPanelSettingsIcon />
-                </Avatar>
-              </ListItemAvatar>
-              <ListItemText primary={admin} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-        
-      </List>
-    </Dialog>
-  );
-}
-
-SimpleDialog.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  open: PropTypes.bool.isRequired,
-  selectedValue: PropTypes.string.isRequired,
-}; 
-*/
-
-
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 
 
 const drawerWidth = 240;
@@ -193,18 +125,47 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 export default function MiniDrawer() {  
 
-    const [openCart, setOpenCart] = React.useState(false);
+    
 
-    const handleCartOpen = () => {
-        setOpenCart(true);
+    
+    let wishlist = JSON.parse(localStorage.getItem("wishlist"));
+
+    const [openCart, setOpenCart] = React.useState(false);
+    const [alert, setAlert] = React.useState(false);
+    const [qty, setQty] = React.useState(0);
+    const [total, setTotal] = React.useState(0);
+    //let qty = 0;
+
+    const handleAlertClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+        setAlert(false);
+      }; 
+
+    //let Qty;
+    const handleCartOpen = (qty, total) => {
+        let cart = JSON.parse(localStorage.getItem("cart"));
+        qty = cart.reduce(function(qty, current) {
+            return qty + + current.qty
+          }, 0);    
+        total = cart.reduce(function(total, current) {
+        return total + + current.price
+        }, 0);      
+        console.log(qty);
+        console.log(total);
+        if(cart != null && cart.length > 0){
+            setOpenCart(true);
+            setQty(qty);
+            setTotal(total);
+        } else {
+            setAlert(true);
+        }
     };
   
     const handleCartClose = () => {
         setOpenCart(false);
     };
-
-  //const UserRole = localStorage.getItem("role")
-  //console.log('UserRole', UserRole)
 
   const [openAdmin, setOpenAdmin] = React.useState(false);
   const [selectedValue, setSelectedValue] = React.useState([]);
@@ -217,25 +178,6 @@ export default function MiniDrawer() {
     setOpenAdmin(false);
     setSelectedValue(value);
   };
-
-
-
-
-//   let loggedUser;
-//   let loggedStatus;
-//   //let Role;
-
-//   loggedUser = localStorage.getItem("user")
-//   loggedStatus = localStorage.getItem("status")
-
-//   /* if(UserRole === null && UserRole === 'None' && UserRole !== 'Admin'){
-//     Role = false
-//   } */
-  
-//   if(loggedUser === null && loggedStatus === 'None'){         
-//   console.log('YAY')
-//   loggedUser = localStorage.setItem("user", "Not signed in")
-//   }
   
          
 let navigate = useNavigate();        
@@ -264,25 +206,12 @@ const itemsList = [
       url:'/contact',
       onClick: () => navigate('/contact'), 
     },
-    // {
-    //   text: <div className="font-link">Login/Sign-up</div>,
-    //   icon: <LoginIcon />,
-    //   url:'/login',
-    //   onClick: () => navigate('/login'), 
-    // },
     ];
-        
-
-//   loggedUser = localStorage.getItem("user")
-
-//   if (UserRole === 'Admin'){
-//     loggedUser = 'Admin'
-//     console.log('ZZZZZZZZZZZZ',loggedUser)
-//   }
 
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   let search, setSearch = React.useState('');
+  
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -355,7 +284,9 @@ const itemsList = [
           {/* <img src={logo} className="App-logo" alt="logo" style={{height:'60px', width: '60px'}} />            */}
           </Box>  
           <Tooltip title="View cart">
-          <Fab onClick={handleCartOpen} aria-label="search" sx= {{backgroundColor: "black", color: "red", height:'55px', width:'55px'}}>
+          <Fab //onClick={handleCartOpen} 
+            onClick={() => handleCartOpen(qty)}
+           aria-label="search" sx= {{backgroundColor: "black", color: "red", height:'55px', width:'55px'}}>
             <ShoppingCartOutlinedIcon />
           </Fab>  
           </Tooltip>                           
@@ -445,6 +376,21 @@ const itemsList = [
     <ContactSupportIcon fontSize='large' />
   </Fab>   
   </Tooltip>   
+  <Snackbar
+          onClose={handleAlertClose}
+          open={alert}
+          autoHideDuration={4000}
+          //message="Product added to your wishlist"
+          >
+    <Alert
+    //onClose={handleClose}
+    severity="warning"
+    variant="filled"
+    sx={{ width: '100%'}}>
+        <AlertTitle>{'Your cart is empty !'}</AlertTitle>
+    {'Continue shopping to add items to your cart.'}
+  </Alert>
+</Snackbar> 
  
       <React.Fragment>      
       <Dialog
@@ -454,11 +400,15 @@ const itemsList = [
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {"Your cart is empty"}
+          {"Your cart contents :"}
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Continue shopping to add items to your cart.
+            {'Product quantity : ' + qty}
+            <br/>
+            {'Product total amount : R' + total}
+            <br/>
+            {'Continue shopping to add more items to your cart'}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
