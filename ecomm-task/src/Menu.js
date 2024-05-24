@@ -55,6 +55,18 @@ import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 
 
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+
+import DeleteIcon from '@mui/icons-material/Delete';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+
+
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -129,6 +141,18 @@ export default function MiniDrawer() {
 
     
     let wishlist = JSON.parse(localStorage.getItem("wishlist"));
+
+    let cart = JSON.parse(localStorage.getItem("cart"));
+
+    const handleRemove = (row) => {
+        /* let fw = JSON.parse(localStorage.getItem("wishlist"));
+        const filtered = fw.filter(item => item.id !== row.id);
+        localStorage.setItem("wishlist", JSON.stringify(filtered));
+        console.log(row.id + ' removed');
+        setOpenSnack(true); 
+        let ls = JSON.parse(localStorage.getItem("wishlist")) 
+        console.log(ls) */
+    };
 
     const [openCart, setOpenCart] = React.useState(false);
     const [alert, setAlert] = React.useState(false);
@@ -398,18 +422,65 @@ const itemsList = [
         onClose={handleCartClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
+        fullWidth={true} maxWidth={"lg"}
       >
         <DialogTitle id="alert-dialog-title">
-          {"Your cart contents :"}
+          {"Your cart summary :"}
         </DialogTitle>
-        <DialogContent>
+        <DialogContent 
+        >
           <DialogContentText id="alert-dialog-description">
             {'Product quantity : ' + qty}
             <br/>
             {'Product total amount : R' + total}
-            <br/>
-            {'Continue shopping to add more items to your cart'}
+            <br/><br/>
           </DialogContentText>
+          <TableContainer component={Paper}>
+      <Table sx={{width:'100%'}} aria-label="table"
+      >
+        <TableHead>
+          <TableRow>
+            <TableCell>Cart details</TableCell>
+            <TableCell align="right">Product</TableCell>
+            <TableCell align="right">Price</TableCell>
+            <TableCell align="right">Quantity</TableCell>
+            <TableCell align="right"></TableCell>
+            {/* <TableCell align="right">Carbs&nbsp;(g)</TableCell>
+            <TableCell align="right">Protein&nbsp;(g)</TableCell> */}
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {cart.map((row) => (
+            <TableRow
+              key={row.id}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <TableCell component="th" scope="row">
+                {row.name}
+              </TableCell>
+              <TableCell align="right">{row.title}</TableCell>
+              <TableCell align="right">{`R ${row.price}`}</TableCell>
+              <TableCell align="right">{row.qty}</TableCell>
+              <TableCell align="right">                
+                <Tooltip title="Remove from cart">      
+                    <IconButton onClick={() => {
+                            handleRemove(row);
+                        }}>
+                        <DeleteIcon color="primary" />
+                    </IconButton>
+          </Tooltip>
+              </TableCell>
+              {/* <TableCell align="right">{row.carbs}</TableCell>
+              <TableCell align="right">{row.protein}</TableCell> */}
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>      
+    </TableContainer>
+    <DialogContentText id="alert-dialog-description">
+    <br/>
+    {'Continue shopping to add more items to your cart'}
+    </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCartClose}>Ok</Button>          
