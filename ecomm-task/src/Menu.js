@@ -65,6 +65,12 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import ButtonGroup from '@mui/material/ButtonGroup';
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
+
+import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
+import RemoveCircleRoundedIcon from '@mui/icons-material/RemoveCircleRounded';
 
 
 const drawerWidth = 240;
@@ -203,17 +209,44 @@ export default function MiniDrawer() {
         setOpenCart(false);
     };
 
-  const [openAdmin, setOpenAdmin] = React.useState(false);
-  const [selectedValue, setSelectedValue] = React.useState([]);
 
-  const handleOpenAdmin = () => {
-    setOpenAdmin(true);
+
+/*   const IncNum = (row) => {
+    var items = JSON.parse(localStorage.getItem('cart'))
+    var item = items.find(item => item.id === row.id);
+    if (item) {
+        item.qty += 1;
+        item.price += row.price;
+    }   
+  localStorage.setItem('cart', JSON.stringify(items));
+  console.log(items);
   };
 
-  /* const handleClose = (value) => {
-    setOpenAdmin(false);
-    setSelectedValue(value);
+  const DecNum = (row) => {
+    var items = JSON.parse(localStorage.getItem('cart'))
+    var item = items.find(item => item.id === row.id);
+    if (item) {
+        item.qty -= 1;
+        item.price -= row.price;
+    }   
+  localStorage.setItem('cart', JSON.stringify(items));
+  console.log(items);
   }; */
+
+/*   const handleRemove = (row) => {
+    let fw = JSON.parse(localStorage.getItem("cart"));
+    const filtered = fw.filter(item => item.id !== row.id);
+    localStorage.setItem("cart", JSON.stringify(filtered));
+    console.log(row.id + ' removed');
+    setOpenSnack(true); 
+    let ls = JSON.parse(localStorage.getItem("cart"));
+    console.log(ls);
+    handleCartOpen(qty, total);
+    if(ls.length < 1){
+        setOpenCart(false);
+        setAlert(true);
+    }
+}; */
   
          
 let navigate = useNavigate();        
@@ -449,7 +482,7 @@ const itemsList = [
         onClose={handleCartClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
-        fullWidth={true} maxWidth={"lg"}
+        fullWidth={true} maxWidth={"xl"}
       >
         <DialogTitle id="alert-dialog-title">
           {"Your cart summary :"}
@@ -487,7 +520,20 @@ const itemsList = [
               </TableCell>
               <TableCell align="right">{row.title}</TableCell>
               <TableCell align="right">{`R ${row.price}`}</TableCell>
-              <TableCell align="right">{row.qty}</TableCell>
+              <TableCell align="right">              
+              {/* <Button onClick={() => {
+                            DecNum(row);
+                        }}>
+                <RemoveCircleRoundedIcon />
+                </Button> */}
+                {row.qty}
+                {/* <Button onClick={() => {
+                            IncNum(row);
+                        }}>
+                <AddCircleRoundedIcon />
+                </Button> */}
+                
+                </TableCell>
               <TableCell align="right">                
                 <Tooltip title="Remove from cart">      
                     <IconButton onClick={() => {
