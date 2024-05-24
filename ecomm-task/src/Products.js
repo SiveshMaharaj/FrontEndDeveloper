@@ -45,7 +45,7 @@ export default function Products() {
     const [chosen, setChosen] = useState([]);
     const [openSnack, setOpenSnack] = React.useState(false);  
     const [openInfo, setOpenInfo] = React.useState(false);
-    const [alert, setAlert] = React.useState(true);
+    const [alert, setAlert] = React.useState(false);
 
     let wishlist = [];
     
@@ -68,7 +68,7 @@ export default function Products() {
         var existingEntries = JSON.parse(localStorage.getItem("wishlist"));
 
         var id = existingEntries.length + 1;        
-            if (existingEntries.filter(item => item.id == product.id).length == 0){
+            if (existingEntries.filter(item => item.id === product.id).length === 0){
                 if(existingEntries == null) existingEntries = [];
                 var entry = {
                     "id": product.id,

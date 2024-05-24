@@ -16,7 +16,6 @@ import IconButton from '@mui/material/IconButton';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import Tooltip from '@mui/material/Tooltip';
 import DeleteIcon from '@mui/icons-material/Delete';
-
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -26,6 +25,8 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
+import Chip from '@mui/material/Chip';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 export default function Wishlist() { 
     const [openSnack, setOpenSnack] = React.useState(false);  
@@ -51,6 +52,8 @@ export default function Wishlist() {
 
 
         
+    const wishlistCount = (Number(wishlist.length)) 
+    const chipText = "Items in your wishlist :  " + wishlistCount;
   
  
 return (   
@@ -78,7 +81,8 @@ return (
       </Typography>         
     </CardContent>    
   </Card> */}
-  
+  <Chip label={<div className="font-link">{chipText}</div>} color="primary" size="medium"  />
+  <br/>
   <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="table"
       >
@@ -87,6 +91,7 @@ return (
             <TableCell>My wishlist</TableCell>
             <TableCell align="right">Product</TableCell>
             <TableCell align="right">Price</TableCell>
+            <TableCell align="right"></TableCell>
             {/* <TableCell align="right">Carbs&nbsp;(g)</TableCell>
             <TableCell align="right">Protein&nbsp;(g)</TableCell> */}
           </TableRow>
