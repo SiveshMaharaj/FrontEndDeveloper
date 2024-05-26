@@ -159,6 +159,9 @@ export default function MiniDrawer() {
     };
     const handleOpenBackdrop = () => {
         setOpenBackdrop(true);
+        setTimeout(() => setOpenBackdrop(false), 3800);
+        setTimeout(() => setOpenSuccess(true), 4000);   
+        //setOpenBackdrop(false);
     };
     
     const [openCheckout, setOpenCheckout] = React.useState(false);
@@ -182,6 +185,7 @@ export default function MiniDrawer() {
     };  
 
     const [openCart, setOpenCart] = React.useState(false);
+    const [openSuccess, setOpenSuccess] = React.useState(false);
     const [alert, setAlert] = React.useState(false);
     const [qty, setQty] = React.useState(0);
     const [total, setTotal] = React.useState(0);
@@ -232,10 +236,19 @@ export default function MiniDrawer() {
         } else {
             setAlert(true);
         }
-    };
+    };    
   
     const handleCartClose = () => {
         setOpenCart(false);
+    };
+
+    const handleSuccessClose = () => {
+        let cart = [];
+        localStorage.setItem("cart", JSON.stringify(cart));
+        
+        setOpenSuccess(false);
+        setOpenCheckout(false);
+        setOpenCart(false);        
     };
 
   /* const [isEnabled, setIsEnabled] = React.useState(false);
@@ -264,7 +277,7 @@ export default function MiniDrawer() {
     }   
   localStorage.setItem('cart', JSON.stringify(items));
   console.log(items);
-  };  */ 
+  }; */ 
          
 let navigate = useNavigate();        
 const itemsList = [
@@ -677,6 +690,29 @@ const itemsList = [
         &nbsp;&nbsp;
         {'Processing payment...'}
     </Backdrop>    
+      </Dialog>
+    </React.Fragment>
+
+    <React.Fragment>      
+      <Dialog
+        open={openSuccess}
+        onClose={handleSuccessClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        fullWidth={true} maxWidth={"xl"}
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Order successful ! - Order No. : 1001234"}
+        </DialogTitle>
+        <DialogContent 
+        >
+          <DialogContentText id="alert-dialog-description">            
+            {'Your order and payment was successful. Please check your email for order & delivery details.'}            
+          </DialogContentText>             
+        </DialogContent>
+        <DialogActions>
+          <Button variant="contained" onClick={handleSuccessClose}>Ok</Button>              
+        </DialogActions>
       </Dialog>
     </React.Fragment>
 
