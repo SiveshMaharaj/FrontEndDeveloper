@@ -72,6 +72,16 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import RemoveCircleRoundedIcon from '@mui/icons-material/RemoveCircleRounded';
 
+import CloseIcon from '@mui/icons-material/Close';
+import Slide from '@mui/material/Slide';
+
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
+
+//full-screen dialog
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+  });
 
 const drawerWidth = 240;
 
@@ -142,8 +152,27 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 
 export default function MiniDrawer() {  
+    const [openBackdrop, setOpenBackdrop] = React.useState(false);
 
+    const handleCloseBackdrop = () => {
+        setOpenBackdrop(false);
+    };
+    const handleOpenBackdrop = () => {
+        setOpenBackdrop(true);
+    };
     
+    const [openCheckout, setOpenCheckout] = React.useState(false);
+    const handleClickOpenCheckout = () => {
+        setOpenCheckout(true);
+    };
+
+    const handleCloseCheckout = () => {
+        setOpenCart(false);
+        setOpenCheckout(false);
+    };
+
+
+    //////////////////////////////////
 
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -462,7 +491,9 @@ const itemsList = [
         <AlertTitle>{'Your cart is empty !'}</AlertTitle>
     {'Continue shopping to add items to your cart.'}
   </Alert>
-</Snackbar> 
+</Snackbar>
+
+    
  
       <React.Fragment>      
       <Dialog
@@ -544,9 +575,108 @@ const itemsList = [
         </DialogContent>
         <DialogActions>
           <Button variant="contained" onClick={handleCartClose}>Continue shopping</Button> 
-          <Button variant="contained" //onClick={handleCartClose}
+          <Button variant="contained" onClick={handleClickOpenCheckout}
           >Proceed to checkout</Button>         
         </DialogActions>
+      </Dialog>
+    </React.Fragment>
+
+    <React.Fragment>
+      {/* <Button variant="outlined" onClick={handleClickOpenCheckout}>
+        Open full-screen dialog
+      </Button> */}
+      <Dialog
+        fullScreen
+        open={openCheckout}
+        onClose={handleCloseCheckout}
+        TransitionComponent={Transition}
+      >
+        <AppBar sx={{ position: 'relative' }}>
+          <Toolbar>
+            {/* <IconButton
+              edge="start"
+              color="inherit"
+              onClick={handleCloseCheckout}
+              aria-label="close"
+            >
+              <CloseIcon />
+            </IconButton> */}
+            <Typography sx={{  flex: 1 }} variant="h6" component="div">
+              Checkout Summary Details
+            </Typography>
+            <Button variant="outlined" autoFocus color="inherit" onClick={handleCloseCheckout}>
+              Continue shopping
+            </Button>
+          </Toolbar>
+        </AppBar>
+        <TableContainer component={Paper}>
+      <Table sx={{width:'100%'}} aria-label="table"
+      >
+        <TableHead>
+          <TableRow>
+            <TableCell></TableCell>
+            <TableCell align="left">Product</TableCell>
+            <TableCell align="left">Unit Price</TableCell>
+            <TableCell align="left">Quantity</TableCell>
+            <TableCell align="left"></TableCell>
+            {/* <TableCell align="right">Carbs&nbsp;(g)</TableCell>
+            <TableCell align="right">Protein&nbsp;(g)</TableCell> */}
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {cart.map((row) => (
+            <TableRow
+              key={row.id}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <TableCell component="th" scope="row">
+                {row.name}
+              </TableCell>
+              <TableCell align="left">{row.title}</TableCell>
+              <TableCell align="left">{`R ${row.price}`}</TableCell>
+              <TableCell align="left">              
+              {/* <Button //enabled={isEnabled}
+               onClick={() => {
+                            DecNum(row);
+                        }}>
+                <RemoveCircleRoundedIcon />
+                </Button> */}
+                {row.qty}
+               {/*  <Button onClick={() => {
+                            IncNum(row);
+                        }}>
+                <AddCircleRoundedIcon />
+                </Button> */}                
+                </TableCell>   
+                <TableCell align="right"></TableCell>                        
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>      
+    </TableContainer>
+  <Divider/>
+          <Toolbar style={{backgroundColor:'green'}}>           
+            <Typography sx={{  flex: 1 }} variant="h6" component="div">
+            <div style={{color: 'white'}}>
+            {'Cart quantity : ' + qty}
+             <br/>
+            {'Cart total amount : R' + total}
+            </div>
+            </Typography>
+            <Button onClick={handleOpenBackdrop} style={{width: 400, borderWidth:1, borderStyle: 'solid', borderColor: 'white', color: 'white'}} variant="contained" color="success">
+                {'Place order & pay'}
+            </Button>     
+          </Toolbar>
+          <Divider/>
+    <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={openBackdrop}
+        onClick={handleCloseBackdrop}
+      >
+        <CircularProgress color="inherit" />
+        &nbsp;&nbsp;
+        {'Processing payment...'}
+    </Backdrop>    
       </Dialog>
     </React.Fragment>
 
