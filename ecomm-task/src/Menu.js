@@ -13,32 +13,21 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
-//import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import MailIcon from '@mui/icons-material/Mail';
 import './AppStyle.css';
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
 import StarRateIcon from '@mui/icons-material/StarRate';
-import ElectricBoltIcon from '@mui/icons-material/ElectricBolt';
-import LoginIcon from '@mui/icons-material/Login';
-//import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
 import { useLocation, useNavigate, createSearchParams  } from 'react-router-dom';
-//import { color } from '@mui/system';
 import * as Colours from "@mui/material/colors"
 import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
 import Fab from '@mui/material/Fab';
 import SearchIcon from '@mui/icons-material/Search';
 import Tooltip from '@mui/material/Tooltip';
 import ContactSupportIcon from '@mui/icons-material/ContactSupport';
-import Chip from '@mui/material/Chip';
-import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
-
 import Button from '@mui/material/Button';
-import Avatar from '@mui/material/Avatar';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import ListItemButton from '@mui/material/ListItemButton';
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
 import PropTypes from 'prop-types';
@@ -55,7 +44,6 @@ import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 
 
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 import DeleteIcon from '@mui/icons-material/Delete';
 import Table from '@mui/material/Table';
@@ -65,16 +53,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import ButtonGroup from '@mui/material/ButtonGroup';
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
-
-import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
-import RemoveCircleRoundedIcon from '@mui/icons-material/RemoveCircleRounded';
-
-import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
-
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 
@@ -174,7 +153,6 @@ export default function MiniDrawer() {
         setOpenCheckout(false);
     };
 
-
     //////////////////////////////////
 
     const handleClose = (event, reason) => {
@@ -190,9 +168,7 @@ export default function MiniDrawer() {
     const [qty, setQty] = React.useState(0);
     const [total, setTotal] = React.useState(0);
     const [openSnack, setOpenSnack] = React.useState(false);
-
-    //let wishlist = JSON.parse(localStorage.getItem("wishlist"));
-
+   
     let cart = JSON.parse(localStorage.getItem("cart"));
 
     const handleRemove = (row) => {
@@ -209,7 +185,6 @@ export default function MiniDrawer() {
             setAlert(true);
         }
     };
-    //let qty = 0;
 
     const handleAlertClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -218,7 +193,6 @@ export default function MiniDrawer() {
         setAlert(false);
       }; 
 
-    //let Qty;
     const handleCartOpen = (qty, total) => {
         let cart = JSON.parse(localStorage.getItem("cart"));
         qty = cart.reduce(function(qty, current) {
@@ -372,8 +346,7 @@ const itemsList = [
         <Divider/>
         {/* <List> */}        
         <List>      
-            {itemsList.map((item, index) => {
-            //const route = itemsList[item];
+            {itemsList.map((item, index) => {            
             const { text, icon, onClick, url } = item;
             return (
             <ListItem      
@@ -424,9 +397,7 @@ const itemsList = [
         <AlertTitle>{'Your cart is empty !'}</AlertTitle>
     {'Continue shopping to add items to your cart.'}
   </Alert>
-</Snackbar>
-
-    
+</Snackbar>    
  
       <React.Fragment>      
       <Dialog

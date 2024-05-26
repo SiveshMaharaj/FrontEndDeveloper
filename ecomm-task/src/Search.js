@@ -1,10 +1,6 @@
 import './AppStyle.css';
 import * as React from 'react';
 import Box from '@mui/material/Box';
-// import MovingText from 'react-moving-text';
-// import Slider from 'react-animated-slider';
-//import 'react-animated-slider/build/horizontal.css';
-//import { imageSlider } from './imageslider';
 import Grid from '@mui/system/Unstable_Grid';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -21,9 +17,6 @@ import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 import IconButton from '@mui/material/IconButton';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import Tooltip from '@mui/material/Tooltip';
 import InfoIcon from '@mui/icons-material/Info';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -44,8 +37,7 @@ import SearchIcon from '@mui/icons-material/Search';
 export default function Search() { 
     const [category, setCategory] = React.useState('');
     const [products, setProducts] = useState([]);
-    const [searchProd, setsearchProd] = useState([]);
-    const [categories, setCategories] = useState([])
+    const [searchProd, setsearchProd] = useState([]);    
     const [chosen, setChosen] = useState([]);
     const [openCartSnack, setCartSnack] = React.useState(false); 
     const [openSnack, setOpenSnack] = React.useState(false);  
@@ -55,27 +47,10 @@ export default function Search() {
 
      // Call fetchData on component mount
      useEffect(() => {
-        fetchAllProducts();
-        fetchAllCategories();
+        fetchAllProducts();        
         //console.log('products', products)
      }, []);
 
-
-   
-  
-    //Games
-    //const tableData = games.filter(x => x.name.toLowerCase().includes(criteria))  
-  
-    //Other
-    //const tableAccData = acc.filter(x => x.name.toLowerCase().includes(criteria))
-  
-    //Full stock count of product search
-    //const stockCount = (Number(tableData.length) + Number(tableAccData.length)) 
-  
-    //const results = "Search page results(" + stockCount + ") for '" + searchParams.get("id") + "'";
-    //console.log (results);
-
-    //let wishlist = [];
     
     const handleCartClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -180,36 +155,12 @@ export default function Search() {
     let criteria = searchParams.get("id").toLowerCase();  
     console.log('criteria', criteria);
 
-    //products.filter((item) => item.title === criteria);
     const tableData = products.filter(x => x.title.toLowerCase().includes(criteria))
     console.log('search prod', tableData)
 
-    const results = "Search results (" + tableData.length + ") for '" + searchParams.get("id") + "'";
+    const results = "Search results (" + tableData.length + ") for '" + searchParams.get("id") + "'";   
 
-
-
-    // Function to fetch category data using Axios
-    const fetchAllCategories = async () => {
-        try {
-        const response = await axios.get("https://fakestoreapi.com/products/categories");
-        setCategories(response.data);
-        } catch (error) {
-        console.error("Error fetching data:", error);
-        }
-    };
-
-    // Function to get filtered list
-    function getFilteredList() {
-        // Avoid filter when selectedCategory is null
-        if (!category) {
-          return products;
-        }
-        return products.filter((item) => item.category === category);
-    }
-
-    // Avoid duplicate function calls with useMemo
-    //var filteredList = useMemo(getFilteredList, [category, products]);
-
+    
     // Function to fetch product data using Axios
     const fetchSingleProduct = async (key) => {
         try {
@@ -229,11 +180,9 @@ return (
 <Snackbar
           onClose={handleCartClose}
           open={openCartSnack}
-          autoHideDuration={4000}
-          //message="Product added to your wishlist"
+          autoHideDuration={4000}          
           >
     <Alert
-    //onClose={handleClose}
     severity="success"
     variant="filled"
     sx={{ width: '100%' }}
@@ -246,10 +195,8 @@ return (
           onClose={handleWarning}
           open={warning}
           autoHideDuration={4000}
-          //message="Product added to your wishlist"
           >
     <Alert
-    //onClose={handleClose}
     severity="info"
     variant="filled"
     sx={{ width: '100%' }}
@@ -262,10 +209,8 @@ return (
           onClose={handleAlertClose}
           open={alert}
           autoHideDuration={4000}
-          //message="Product added to your wishlist"
           >
-    <Alert
-    //onClose={handleClose}
+    <Alert    
     severity="info"
     variant="filled"
     sx={{ width: '100%' }}
@@ -276,46 +221,18 @@ return (
     <Snackbar
           onClose={handleClose}
           open={openSnack}
-          autoHideDuration={4000}
-          //message="Product added to your wishlist"
+          autoHideDuration={4000}          
           >
-    <Alert
-    //onClose={handleClose}
+    <Alert    
     severity="success"
     variant="filled"
     sx={{ width: '100%' }}
   >
     {'Product added to your wishlist !'}
   </Alert>
-</Snackbar>   
-  {/* <Card sx={{ width: '100', borderRadius: 10, alignContent: 'center', justifyContent: 'center', textAlign:'center'}}>
-    <CardContent>
-      <Typography sx={{ fontSize: 30, alignContent: 'center', justifyContent: 'center' }} color="coral">
-        Products page                
-      </Typography>         
-    </CardContent>    
-  </Card> */}
+</Snackbar>     
   <br/>
   <br/>
- {/*  <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Filter products by category</InputLabel>             
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={category}
-          label="Filter products by category"
-          onChange={handleCategory}
-        >
-        {categories.map((cat) => (
-          <MenuItem key={cat} value={cat}>{cat}</MenuItem>         
-        ))}
-        </Select>        
-    </FormControl> */}
-
-      {/* {products.map((product) => (
-      <img key={product.id} src={product.image} alt={product.title} width={200}/>
-      ))} */}
-
 
 <Chip label={<div className="font-link">{results}</div>} color="error" size="medium" icon={<SearchIcon />} />
     <ImageList sx={{ width: 1000, height: 800, borderRadius: 5, scrollbarWidth: 'none' }}>
@@ -415,10 +332,8 @@ return (
         <DialogActions>
           <Button onClick={handleInfoClose}>Cool!</Button>          
         </DialogActions>
-      </Dialog>
-      
-    </React.Fragment>
-    
+      </Dialog>      
+    </React.Fragment>    
 </div>   
 )
 }

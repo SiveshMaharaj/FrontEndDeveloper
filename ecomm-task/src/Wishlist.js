@@ -1,10 +1,6 @@
 import './AppStyle.css';
 import * as React from 'react';
 import Box from '@mui/material/Box';
-// import MovingText from 'react-moving-text';
-// import Slider from 'react-animated-slider';
-//import 'react-animated-slider/build/horizontal.css';
-//import { imageSlider } from './imageslider';
 import Grid from '@mui/system/Unstable_Grid';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -77,24 +73,15 @@ return (
         onClose={handleClose}
         open={openSnack}
         autoHideDuration={4000}
-        //message="Product added to your wishlist"
         >
     <Alert
-    //onClose={handleClose}
     severity="success"
     variant="filled"
     sx={{ width: '100%' }}
   >
     {'Product removed from your wishlist !'}
   </Alert>
-</Snackbar> 
-  {/* <Card sx={{ width: '100', borderRadius: 10, alignContent: 'center', justifyContent: 'center', textAlign:'center' }}>
-    <CardContent>
-      <Typography sx={{ fontSize: 30, alignContent: 'center', justifyContent: 'center' }} color="coral">
-        Wishlist page
-      </Typography>         
-    </CardContent>    
-  </Card> */}
+</Snackbar>   
   <Chip label={<div className="font-link">{chipText}</div>} color="primary" size="medium"  />
   <br/>
   <TableContainer component={Paper}>
@@ -105,9 +92,7 @@ return (
             <TableCell>My wishlist</TableCell>
             <TableCell align="right">Product</TableCell>
             <TableCell align="right">Price</TableCell>
-            <TableCell align="right"></TableCell>
-            {/* <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell> */}
+            <TableCell align="right"></TableCell>            
           </TableRow>
         </TableHead>
         <TableBody>
@@ -130,8 +115,6 @@ return (
                     </IconButton>
           </Tooltip>
               </TableCell>
-              {/* <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell> */}
             </TableRow>
           ))}
         </TableBody>

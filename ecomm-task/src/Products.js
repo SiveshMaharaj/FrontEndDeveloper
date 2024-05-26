@@ -1,10 +1,6 @@
 import './AppStyle.css';
 import * as React from 'react';
 import Box from '@mui/material/Box';
-// import MovingText from 'react-moving-text';
-// import Slider from 'react-animated-slider';
-//import 'react-animated-slider/build/horizontal.css';
-//import { imageSlider } from './imageslider';
 import Grid from '@mui/system/Unstable_Grid';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -48,8 +44,6 @@ export default function Products() {
     const [openInfo, setOpenInfo] = React.useState(false);
     const [alert, setAlert] = React.useState(false);
     const [warning, setWarning] = React.useState(false);
-
-    //let wishlist = [];
     
     const handleCartClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -194,11 +188,9 @@ return (
 <Snackbar
           onClose={handleCartClose}
           open={openCartSnack}
-          autoHideDuration={4000}
-          //message="Product added to your wishlist"
+          autoHideDuration={4000}          
           >
-    <Alert
-    //onClose={handleClose}
+    <Alert    
     severity="success"
     variant="filled"
     sx={{ width: '100%' }}
@@ -210,11 +202,9 @@ return (
 <Snackbar
           onClose={handleWarning}
           open={warning}
-          autoHideDuration={4000}
-          //message="Product added to your wishlist"
+          autoHideDuration={4000}          
           >
-    <Alert
-    //onClose={handleClose}
+    <Alert    
     severity="info"
     variant="filled"
     sx={{ width: '100%' }}
@@ -226,11 +216,9 @@ return (
 <Snackbar
           onClose={handleAlertClose}
           open={alert}
-          autoHideDuration={4000}
-          //message="Product added to your wishlist"
+          autoHideDuration={4000}         
           >
     <Alert
-    //onClose={handleClose}
     severity="info"
     variant="filled"
     sx={{ width: '100%' }}
@@ -242,24 +230,15 @@ return (
           onClose={handleClose}
           open={openSnack}
           autoHideDuration={4000}
-          //message="Product added to your wishlist"
           >
     <Alert
-    //onClose={handleClose}
     severity="success"
     variant="filled"
     sx={{ width: '100%' }}
   >
     {'Product added to your wishlist !'}
   </Alert>
-</Snackbar>   
-  {/* <Card sx={{ width: '100', borderRadius: 10, alignContent: 'center', justifyContent: 'center', textAlign:'center'}}>
-    <CardContent>
-      <Typography sx={{ fontSize: 30, alignContent: 'center', justifyContent: 'center' }} color="coral">
-        Products page                
-      </Typography>         
-    </CardContent>    
-  </Card> */}
+</Snackbar>    
   <br/>
   <br/>
   <FormControl fullWidth>
@@ -276,10 +255,6 @@ return (
         ))}
         </Select>        
     </FormControl>
-
-      {/* {products.map((product) => (
-      <img key={product.id} src={product.image} alt={product.title} width={200}/>
-      ))} */}
 
     <ImageList sx={{ width: 1000, height: 800, borderRadius: 5, scrollbarWidth: 'none' }}>
       <ImageListItem key="Subheader" cols={2}>        

@@ -1,13 +1,6 @@
 import './AppStyle.css';
 import * as React from 'react';
-import Box from '@mui/material/Box';
-// import MovingText from 'react-moving-text';
-// import Slider from 'react-animated-slider';
-//import 'react-animated-slider/build/horizontal.css';
-//import { imageSlider } from './imageslider';
-import Grid from '@mui/system/Unstable_Grid';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 
