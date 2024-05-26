@@ -209,45 +209,33 @@ export default function MiniDrawer() {
         setOpenCart(false);
     };
 
+  /* const [isEnabled, setIsEnabled] = React.useState(false);
 
-
-/*   const IncNum = (row) => {
+  const IncNum = (row) => {
     var items = JSON.parse(localStorage.getItem('cart'))
     var item = items.find(item => item.id === row.id);
     if (item) {
         item.qty += 1;
         item.price += row.price;
+        //setIsEnabled(item.qty >= 1);
     }   
   localStorage.setItem('cart', JSON.stringify(items));
   console.log(items);
   };
 
-  const DecNum = (row) => {
+ 
+
+  const DecNum = (row, event) => {
     var items = JSON.parse(localStorage.getItem('cart'))
     var item = items.find(item => item.id === row.id);
-    if (item) {
+    if (item && item.qty > 1) {
         item.qty -= 1;
         item.price -= row.price;
+        //setIsEnabled(item.qty >= 1);
     }   
   localStorage.setItem('cart', JSON.stringify(items));
   console.log(items);
-  }; */
-
-/*   const handleRemove = (row) => {
-    let fw = JSON.parse(localStorage.getItem("cart"));
-    const filtered = fw.filter(item => item.id !== row.id);
-    localStorage.setItem("cart", JSON.stringify(filtered));
-    console.log(row.id + ' removed');
-    setOpenSnack(true); 
-    let ls = JSON.parse(localStorage.getItem("cart"));
-    console.log(ls);
-    handleCartOpen(qty, total);
-    if(ls.length < 1){
-        setOpenCart(false);
-        setAlert(true);
-    }
-}; */
-  
+  };  */ 
          
 let navigate = useNavigate();        
 const itemsList = [
@@ -342,7 +330,7 @@ const itemsList = [
            <TextField id="outlined-search" type="search" sx={{height:'50px', width: '200px', marginLeft: '2%'}} label={<div className="font-link">Search products...</div>} onChange={handleCriteria} value={search} InputLabelProps={{style : {color : 'black'} }}/>          
           &nbsp;&nbsp;
           <Tooltip title="Search">
-          <Fab onClick={handleSearch} aria-label="search" sx= {{backgroundColor: "black", color: "red", height:'55px', width:'55px'}}>
+          <Fab onClick={handleSearch} aria-label="search" sx= {{backgroundColor: "black", color: "red", height:'50px', width:'55px'}}>
             <SearchIcon />
           </Fab>
           </Tooltip> 
@@ -502,7 +490,7 @@ const itemsList = [
           <TableRow>
             <TableCell>Cart details</TableCell>
             <TableCell align="right">Product</TableCell>
-            <TableCell align="right">Price</TableCell>
+            <TableCell align="right">Unit Price</TableCell>
             <TableCell align="right">Quantity</TableCell>
             <TableCell align="right"></TableCell>
             {/* <TableCell align="right">Carbs&nbsp;(g)</TableCell>
@@ -521,13 +509,14 @@ const itemsList = [
               <TableCell align="right">{row.title}</TableCell>
               <TableCell align="right">{`R ${row.price}`}</TableCell>
               <TableCell align="right">              
-              {/* <Button onClick={() => {
+              {/* <Button //enabled={isEnabled}
+               onClick={() => {
                             DecNum(row);
                         }}>
                 <RemoveCircleRoundedIcon />
                 </Button> */}
                 {row.qty}
-                {/* <Button onClick={() => {
+               {/*  <Button onClick={() => {
                             IncNum(row);
                         }}>
                 <AddCircleRoundedIcon />
@@ -542,9 +531,7 @@ const itemsList = [
                         <DeleteIcon color="primary" />
                     </IconButton>
           </Tooltip>
-              </TableCell>
-              {/* <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell> */}
+              </TableCell>              
             </TableRow>
           ))}
         </TableBody>
@@ -556,8 +543,8 @@ const itemsList = [
     </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCartClose}>Ok</Button> 
-          <Button //onClick={handleCartClose}
+          <Button variant="contained" onClick={handleCartClose}>Continue shopping</Button> 
+          <Button variant="contained" //onClick={handleCartClose}
           >Proceed to checkout</Button>         
         </DialogActions>
       </Dialog>

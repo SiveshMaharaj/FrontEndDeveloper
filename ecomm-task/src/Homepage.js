@@ -20,8 +20,8 @@ return (
     <CardContent>
       <Typography sx={{ fontSize: 30, alignContent: 'center', justifyContent: 'center' }} color="coral">
         Welcome to our website !<br/>
-        Search our products via the search portal in the top right corner
-        or browse our products via the menu on the left  
+        Search our products via the search portal in the top left corner
+        or browse our products via the menu  
       </Typography>         
     </CardContent>    
   </Card>
