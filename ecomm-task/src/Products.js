@@ -272,7 +272,7 @@ return (
           <ImageListItemBar
             key={product.id}
             title={product.title}
-            subtitle={product.description}
+            subtitle={`R ${product.price + ' - ' + product.description}`}
             style={{backgroundColor:'black', height: 150}}
             actionIcon={
             <>

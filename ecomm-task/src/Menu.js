@@ -19,7 +19,6 @@ import MailIcon from '@mui/icons-material/Mail';
 import './AppStyle.css';
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
 import StarRateIcon from '@mui/icons-material/StarRate';
-
 import { useLocation, useNavigate, createSearchParams  } from 'react-router-dom';
 import * as Colours from "@mui/material/colors"
 import TextField from '@mui/material/TextField';
@@ -42,9 +41,6 @@ import DialogContentText from '@mui/material/DialogContentText';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
-
-
-
 import DeleteIcon from '@mui/icons-material/Delete';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -441,7 +437,8 @@ const itemsList = [
               </TableCell>
               <TableCell align="right">{row.title}</TableCell>
               <TableCell align="right">{`R ${row.price}`}</TableCell>
-              <TableCell align="right">                              
+              <TableCell align="right"> 
+              {row.qty}                             
             </TableCell>
               <TableCell align="right">                
                 <Tooltip title="Remove from cart">      
