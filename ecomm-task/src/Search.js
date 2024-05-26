@@ -37,10 +37,14 @@ import Button from '@mui/material/Button';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
+import { useLocation, useNavigate, useSearchParams  } from 'react-router-dom';
+import Chip from '@mui/material/Chip';
+import SearchIcon from '@mui/icons-material/Search';
 
 export default function Search() { 
     const [category, setCategory] = React.useState('');
     const [products, setProducts] = useState([]);
+    const [searchProd, setsearchProd] = useState([]);
     const [categories, setCategories] = useState([])
     const [chosen, setChosen] = useState([]);
     const [openCartSnack, setCartSnack] = React.useState(false); 
@@ -48,6 +52,28 @@ export default function Search() {
     const [openInfo, setOpenInfo] = React.useState(false);
     const [alert, setAlert] = React.useState(false);
     const [warning, setWarning] = React.useState(false);
+
+     // Call fetchData on component mount
+     useEffect(() => {
+        fetchAllProducts();
+        fetchAllCategories();
+        //console.log('products', products)
+     }, []);
+
+
+   
+  
+    //Games
+    //const tableData = games.filter(x => x.name.toLowerCase().includes(criteria))  
+  
+    //Other
+    //const tableAccData = acc.filter(x => x.name.toLowerCase().includes(criteria))
+  
+    //Full stock count of product search
+    //const stockCount = (Number(tableData.length) + Number(tableAccData.length)) 
+  
+    //const results = "Search page results(" + stockCount + ") for '" + searchParams.get("id") + "'";
+    //console.log (results);
 
     //let wishlist = [];
     
@@ -149,6 +175,19 @@ export default function Search() {
         }
     };
 
+    console.log('products', products)
+    const [searchParams] = useSearchParams();   
+    let criteria = searchParams.get("id").toLowerCase();  
+    console.log('criteria', criteria);
+
+    //products.filter((item) => item.title === criteria);
+    const tableData = products.filter(x => x.title.toLowerCase().includes(criteria))
+    console.log('search prod', tableData)
+
+    const results = "Search results (" + tableData.length + ") for '" + searchParams.get("id") + "'";
+
+
+
     // Function to fetch category data using Axios
     const fetchAllCategories = async () => {
         try {
@@ -169,7 +208,7 @@ export default function Search() {
     }
 
     // Avoid duplicate function calls with useMemo
-    var filteredList = useMemo(getFilteredList, [category, products]);
+    //var filteredList = useMemo(getFilteredList, [category, products]);
 
     // Function to fetch product data using Axios
     const fetchSingleProduct = async (key) => {
@@ -182,11 +221,7 @@ export default function Search() {
         }
     };
 
-    // Call fetchData on component mount
-    useEffect(() => {
-        fetchAllProducts();
-        fetchAllCategories();
-    }, []);
+   
   
  
 return (   
@@ -262,7 +297,7 @@ return (
   </Card> */}
   <br/>
   <br/>
-  <FormControl fullWidth>
+ {/*  <FormControl fullWidth>
         <InputLabel id="demo-simple-select-label">Filter products by category</InputLabel>             
         <Select
           labelId="demo-simple-select-label"
@@ -275,16 +310,18 @@ return (
           <MenuItem key={cat} value={cat}>{cat}</MenuItem>         
         ))}
         </Select>        
-    </FormControl>
+    </FormControl> */}
 
       {/* {products.map((product) => (
       <img key={product.id} src={product.image} alt={product.title} width={200}/>
       ))} */}
 
+
+<Chip label={<div className="font-link">{results}</div>} color="error" size="medium" icon={<SearchIcon />} />
     <ImageList sx={{ width: 1000, height: 800, borderRadius: 5, scrollbarWidth: 'none' }}>
       <ImageListItem key="Subheader" cols={2}>        
       </ImageListItem>
-      {filteredList.map((product, index) => (
+      {tableData.map((product, index) => (
         <ImageListItem key={index}>
           <img
             src={product.image}

@@ -19,7 +19,7 @@ return (
   <Card sx={{ width: '100', borderRadius: 10, alignContent: 'center', justifyContent: 'center', textAlign:'center' }}>
     <CardContent>
       <Typography sx={{ fontSize: 30, alignContent: 'center', justifyContent: 'center' }} color="coral">
-        Updates page
+        No updates added yet ! If you are on our mailer list you will receive product updates
       </Typography>         
     </CardContent>    
   </Card>

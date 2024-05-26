@@ -18,6 +18,7 @@ import Products from './Products';
 import Wishlist from './Wishlist';
 import Updates from './Updates';
 import Contact from './Contact';
+import Search from './Search';
 
 export default function App() {
 
@@ -95,6 +96,7 @@ export default function App() {
       <Route path="/wishlist" exact element={<Wishlist />} /> 
       <Route path="/updates" element={<Updates />} /> 
       <Route path="/contact" element={<Contact />} />
+      <Route path="/search" element={<Search />} />
       {/* <Route path="/search" element={<Search />} />
       <Route path="/success" element={<Success />} />
       <Route path="/login" element={<Login />} />

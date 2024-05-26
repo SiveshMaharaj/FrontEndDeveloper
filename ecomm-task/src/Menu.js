@@ -191,7 +191,7 @@ export default function MiniDrawer() {
     const [total, setTotal] = React.useState(0);
     const [openSnack, setOpenSnack] = React.useState(false);
 
-    let wishlist = JSON.parse(localStorage.getItem("wishlist"));
+    //let wishlist = JSON.parse(localStorage.getItem("wishlist"));
 
     let cart = JSON.parse(localStorage.getItem("cart"));
 
@@ -250,34 +250,7 @@ export default function MiniDrawer() {
         setOpenCheckout(false);
         setOpenCart(false);        
     };
-
-  /* const [isEnabled, setIsEnabled] = React.useState(false);
-
-  const IncNum = (row) => {
-    var items = JSON.parse(localStorage.getItem('cart'))
-    var item = items.find(item => item.id === row.id);
-    if (item) {
-        item.qty += 1;
-        item.price += row.price;
-        //setIsEnabled(item.qty >= 1);
-    }   
-  localStorage.setItem('cart', JSON.stringify(items));
-  console.log(items);
-  };
-
  
-
-  const DecNum = (row, event) => {
-    var items = JSON.parse(localStorage.getItem('cart'))
-    var item = items.find(item => item.id === row.id);
-    if (item && item.qty > 1) {
-        item.qty -= 1;
-        item.price -= row.price;
-        //setIsEnabled(item.qty >= 1);
-    }   
-  localStorage.setItem('cart', JSON.stringify(items));
-  console.log(items);
-  }; */ 
          
 let navigate = useNavigate();        
 const itemsList = [
@@ -327,8 +300,8 @@ const itemsList = [
   const handleSearch = event => {     
     event.preventDefault();
     // 👇️ value of input field
-    console.log('text = ', setSearch);    
-    /* navigate('/search') */
+    console.log('text = ', setSearch); 
+       
     navigate
       ({
         pathname: '/search',
@@ -380,10 +353,9 @@ const itemsList = [
             <p className="font-head" >{'wantalot.com'}</p>
           </Typography>
           <Divider/>          
-          {/* <img src={logo} className="App-logo" alt="logo" style={{height:'60px', width: '60px'}} />            */}
           </Box>  
           <Tooltip title="View cart">
-          <Fab //onClick={handleCartOpen} 
+          <Fab 
             onClick={() => handleCartOpen(qty)}
            aria-label="search" sx= {{backgroundColor: "black", color: "red", height:'55px', width:'55px'}}>
             <ShoppingCartOutlinedIcon />
@@ -404,8 +376,7 @@ const itemsList = [
             //const route = itemsList[item];
             const { text, icon, onClick, url } = item;
             return (
-            <ListItem
-            /* sx= {{backgroundColor: "lightcoral", color: "black"}} */      
+            <ListItem      
             selected={url === pathname } button key={index} onClick={onClick}>
             {icon && <ListItemIcon>{icon}</ListItemIcon>}
             <ListItemText primary={text} />
@@ -413,55 +384,7 @@ const itemsList = [
             );
             })}
         </List>
-
-         {/*  {['Current Games', 'Current Gadgets', 'Coming Soon', 'Contact Us'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-                  {[<EmojiEmotionsIcon />, <ElectricBoltIcon />, <StarRateIcon />, <MailIcon />][index]}
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List> */}
         <Divider/>
-        {/* <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List> */}
       </Drawer>
       <Tooltip title="Contact Support">
     <Fab onClick={handleContact}
@@ -479,10 +402,9 @@ const itemsList = [
         onClose={handleClose}
         open={openSnack}
         autoHideDuration={4000}
-        //message="Product added to your wishlist"
+        
         >
     <Alert
-    //onClose={handleClose}
     severity="success"
     variant="filled"
     sx={{ width: '100%' }}
@@ -494,10 +416,8 @@ const itemsList = [
           onClose={handleAlertClose}
           open={alert}
           autoHideDuration={4000}
-          //message="Product added to your wishlist"
           >
     <Alert
-    //onClose={handleClose}
     severity="warning"
     variant="filled"
     sx={{ width: '100%'}}>
@@ -537,8 +457,6 @@ const itemsList = [
             <TableCell align="right">Unit Price</TableCell>
             <TableCell align="right">Quantity</TableCell>
             <TableCell align="right"></TableCell>
-            {/* <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell> */}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -552,21 +470,8 @@ const itemsList = [
               </TableCell>
               <TableCell align="right">{row.title}</TableCell>
               <TableCell align="right">{`R ${row.price}`}</TableCell>
-              <TableCell align="right">              
-              {/* <Button //enabled={isEnabled}
-               onClick={() => {
-                            DecNum(row);
-                        }}>
-                <RemoveCircleRoundedIcon />
-                </Button> */}
-                {row.qty}
-               {/*  <Button onClick={() => {
-                            IncNum(row);
-                        }}>
-                <AddCircleRoundedIcon />
-                </Button> */}
-                
-                </TableCell>
+              <TableCell align="right">                              
+            </TableCell>
               <TableCell align="right">                
                 <Tooltip title="Remove from cart">      
                     <IconButton onClick={() => {
@@ -595,9 +500,6 @@ const itemsList = [
     </React.Fragment>
 
     <React.Fragment>
-      {/* <Button variant="outlined" onClick={handleClickOpenCheckout}>
-        Open full-screen dialog
-      </Button> */}
       <Dialog
         fullScreen
         open={openCheckout}
@@ -606,14 +508,6 @@ const itemsList = [
       >
         <AppBar sx={{ position: 'relative' }}>
           <Toolbar>
-            {/* <IconButton
-              edge="start"
-              color="inherit"
-              onClick={handleCloseCheckout}
-              aria-label="close"
-            >
-              <CloseIcon />
-            </IconButton> */}
             <Typography sx={{  flex: 1 }} variant="h6" component="div">
               Checkout Summary Details
             </Typography>
@@ -632,8 +526,6 @@ const itemsList = [
             <TableCell align="left">Unit Price</TableCell>
             <TableCell align="left">Quantity</TableCell>
             <TableCell align="left"></TableCell>
-            {/* <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell> */}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -648,19 +540,8 @@ const itemsList = [
               <TableCell align="left">{row.title}</TableCell>
               <TableCell align="left">{`R ${row.price}`}</TableCell>
               <TableCell align="left">              
-              {/* <Button //enabled={isEnabled}
-               onClick={() => {
-                            DecNum(row);
-                        }}>
-                <RemoveCircleRoundedIcon />
-                </Button> */}
-                {row.qty}
-               {/*  <Button onClick={() => {
-                            IncNum(row);
-                        }}>
-                <AddCircleRoundedIcon />
-                </Button> */}                
-                </TableCell>   
+                {row.qty}              
+              </TableCell>   
                 <TableCell align="right"></TableCell>                        
             </TableRow>
           ))}
@@ -715,8 +596,6 @@ const itemsList = [
         </DialogActions>
       </Dialog>
     </React.Fragment>
-
-
   </Box>
   );
 }

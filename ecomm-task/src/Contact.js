@@ -65,16 +65,7 @@ export default function Contact() {
         setMessage(event.target.value);
       };
     
-      const handleClick = (newState) => () => {    
-    /*   // save query to DB  
-      push(ref(db, 'Queries'), {
-        Name : name,
-        Surname : surname,
-        Email : email,
-        Number : contact,
-        Query : message  
-      }); */
-    
+      const handleClick = (newState) => () => {      
         setName('');
         setSurname('');
         setEmail('');
